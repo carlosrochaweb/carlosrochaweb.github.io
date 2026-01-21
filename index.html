@@ -1,46 +1,795 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banco de Horas</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carlos Rocha | Criação de Sites Profissionais</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --dark: #0f172a;
+      --gray: #475569;
+      --light: #f8fafc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+
+
+                /* Configurações da Seção Hero */
+            .hero {
+              position: relative;
+              width: 100%;
+              height: 100vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              overflow: hidden;
+              background-color: #0f172a; /* Cor de segurança enquanto o vídeo carrega */
+            }
+
+            /* O vídeo ocupando 100% do fundo */
+            .hero-bg {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover; /* Mantém a proporção sem distorcer */
+              z-index: 1;
+            }
+
+            /* Overlay preto com opacidade baixa para leitura do texto */
+            .hero-overlay {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: rgba(0, 0, 0, 0.80); /* Ajuste o 0.55 para mais ou menos brilho */
+              z-index: 2;
+            }
+
+            /* Conteúdo (Texto e Botão) */
+            .hero-content {
+              position: relative;
+              z-index: 3; /* Acima do vídeo e do overlay */
+              max-width: 800px;
+              padding: 0 20px;
+              color: #ffffff;
+            }
+
+            .hero-content h1 {
+              font-size: 2.8rem;
+              margin-bottom: 16px;
+              font-weight: 700;
+              line-height: 1.2;
+            }
+
+            .hero-content p {
+              font-size: 1.15rem;
+              margin-bottom: 32px;
+              color: #cbd5f5;
+              max-width: 600px;
+              margin-left: auto;
+              margin-right: auto;
+            }
+
+            /* Botão dentro do Header */
+            .btn {
+              display: inline-block;
+              background: #2563eb;
+              color: #fff;
+              padding: 14px 28px;
+              border-radius: 8px;
+              text-decoration: none;
+              font-weight: 600;
+              transition: all 0.2s;
+            }
+
+            
+
+            .btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 10px 20px rgba(37,99,235,0.3);
+            }
+
+            /* UX: Indicador de Mouse/Scroll */
+            .scroll-indicator {
+              position: absolute;
+              bottom: 30px;
+              left: 50%;
+              transform: translateX(-50%);
+              z-index: 3;
+            }
+
+            .mouse {
+              width: 28px;
+              height: 46px;
+              border: 2px solid #fff;
+              border-radius: 20px;
+              display: flex;
+              justify-content: center;
+            }
+
+            .wheel {
+              width: 4px;
+              height: 8px;
+              background: #fff;
+              border-radius: 2px;
+              margin-top: 6px;
+              animation: scrollAnim 1.5s infinite;
+            }
+
+            @keyframes scrollAnim {
+              0% { opacity: 1; transform: translateY(0); }
+              100% { opacity: 0; transform: translateY(12px); }
+            }
+
+            /* Responsividade Básica */
+            @media (max-width: 600px) {
+              .hero-content h1 { font-size: 2rem; }
+              .hero-content p { font-size: 1rem; }
+            }
+
+
+    section {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    /* Footer profissional */
+    .footer {
+      background: #020617;
+      color: #cbd5f5;
+      padding: 80px 20px 32px;
+    }
+
+    .footer-grid {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 48px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .footer-brand p {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      max-width: 320px;
+    }
+
+    .footer-links h4,
+    .footer-contact h4 {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-contact p {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .footer-bottom {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(148,163,184,0.15);
+      text-align: center;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 800px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Seção About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-image {
+      position: relative;
+    }
+
+    .about-image img {
+      width: 100%;
+      border-radius: 0 32px 32px 32px;
+      display: block;
+    }
+
+    .experience-badge {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      background: #fff;
+      padding: 16px 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .experience-badge strong {
+      font-size: 1.8rem;
+      color: var(--primary);
+      display: block;
+    }
+
+    .experience-badge span {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .about-content h2 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .about-text {
+      color: var(--gray);
+      margin-bottom: 16px;
+      max-width: 480px;
+    }
+
+    .about-slogan {
+      font-weight: 600;
+      margin-bottom: 24px;
+      max-width: 480px;
+    }
+
+    .about-list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .about-list li {
+      position: relative;
+      padding-left: 28px;
+      font-weight: 500;
+    }
+
+    .about-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Seção Portfólio */
+    .portfolio-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .portfolio-header h2 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    .portfolio-header p {
+      color: var(--gray);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .portfolio-item {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+    }
+
+    /* Seção Depoimentos */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      position: relative;
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+    }
+
+    .google-icon {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .testimonial-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-header img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .stars {
+      color: #facc15;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-card p {
+      font-size: 0.95rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* Seção Autoridade */
+    .authority {
+      background: #fff;
+      border-radius: 24px;
+    }
+
+    .authority-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px;
+      align-items: center;
+    }
+
+    .authority-content h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .authority-content p {
+      color: var(--gray);
+      margin-bottom: 14px;
+      max-width: 520px;
+    }
+
+    .authority-content strong {
+      color: var(--dark);
+    }
+
+    .authority-image img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    @media (max-width: 900px) {
+      .portfolio-grid,
+      .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+      
+    }
+        
+    @media (max-width: 500px) {
+      .portfolio-grid,
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .authority-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .authority-image {
+        order: -1;
+      }
+    }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-badge {
+        right: 16px;
+        bottom: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="app-container">
-    <header>
-      <h1>Banco de Horas</h1>
-      <p>Controle simples e prático do seu saldo diário</p>
-    </header>
 
-    <main>
-      <form id="registroForm" class="card">
-        <div class="input-group">
-          <label for="entrada">Entrada</label>
-          <input type="time" id="entrada" required>
+  <header class="hero">
+    <video class="hero-bg" autoplay muted loop playsinline>
+      <source src="criacao de sites em rio negrinho-video.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <h1>Criação de Sites Profissionais</h1>
+      <p>Ajudo empresas e agências a terem presença online moderna, rápida e focada em conversão.</p>
+      <a href="https://wa.me/5547992916915" class="btn">Solicitar Orçamento</a>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="mouse">
+        <span class="wheel"></span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="grid">
+      <div class="card">
+        <h3>Sites Responsivos</h3>
+        <p>Design adaptado para celular, tablet e desktop, garantindo a melhor experiência em qualquer tela.</p>
+      </div>
+      <div class="card">
+        <h3>Performance & SEO</h3>
+        <p>Páginas rápidas, bem estruturadas e prontas para o Google encontrar seu negócio.</p>
+      </div>
+      <div class="card">
+        <h3>Design Moderno</h3>
+        <p>Layouts atuais, limpos e profissionais que passam confiança e autoridade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção Sobre / Apresentação -->
+  <section class="about">
+    <div class="about-grid">
+      <div class="about-image">
+        <img src="desenvolvimento de sites em rio negrinho.jpg" alt="Criação de sites profissionais">
+        <div class="experience-badge">
+          <strong>6+</strong>
+          <span>anos de experiência</span>
         </div>
-        <div class="input-group">
-          <label for="saida">Saída</label>
-          <input type="time" id="saida" required>
+      </div>
+
+      <div class="about-content">
+        <h2>Criação de sites profissionais</h2>
+        <p class="about-text">
+          Desenvolvo sites profissionais de alta performance, modernos e intuitivos, pensados para gerar resultados reais.
+        </p>
+        <p class="about-slogan">
+          Ganhe tempo, reduza custos e entregue mais valor aos seus clientes.
+        </p>
+        <ul class="about-list">
+          <li>Design moderno</li>
+          <li>Alta performance</li>
+          <li>SEO estratégico</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+    <!-- Seção Portfólio -->
+  <section class="portfolio">
+    <div class="portfolio-header">
+      <h2>Portfólio</h2>
+      <p>Conheça nossos projetos mais recentes</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-item"><img src="1.png" alt="Projeto 1"></div>
+      <div class="portfolio-item"><img src="2.png" alt="Projeto 2"></div>
+      <div class="portfolio-item"><img src="3.png" alt="Projeto 3"></div>
+      <div class="portfolio-item"><img src="4.png" alt="Projeto 4"></div>
+      <div class="portfolio-item"><img src="5.png" alt="Projeto 5"></div>
+      <div class="portfolio-item"><img src="6.png" alt="Projeto 6"></div>
+      <div class="portfolio-item"><img src="7.png" alt="Projeto 7"></div>
+      <div class="portfolio-item"><img src="8.png" alt="Projeto 8"></div>
+    </div>
+  </section>
+
+    <!-- Seção Depoimentos -->
+  <section class="testimonials">
+    <div class="portfolio-header">
+      <h2>Depoimentos de clientes</h2>
+      <p>Inspire-se com histórias de sucesso</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <img class="google-icon" src="logo-google.png" alt="Google">
+        <div class="testimonial-header">
+          <img src="landing-page-para-advogados-logo.png" alt="Cliente">
+          <div>
+            <strong>Landing Pages ADV</strong>
+            <div class="stars">★★★★★</div>
+          </div>
         </div>
-        <button type="submit" class="btn">Registrar</button>
-      </form>
+        <p>Terceirizar o desenvolvimento foi a melhor decisão. Ganhei tempo e consegui escalar minha agência.</p>
+      </div>
 
-      <section class="card saldo-card">
-        <h2>Saldo Acumulado</h2>
-        <p id="saldoDisplay" class="saldo">00:00</p>
-      </section>
-    </main>
-  </div>
+      <div class="testimonial-card">
+        <img class="google-icon" src="logo-google.png"" alt="Google">
+        <div class="testimonial-header">
+          <img src="cliente.jpg" alt="Cliente">
+          <div>
+            <strong>Rafael Mendes</strong>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>O site superou minhas expectativas. Além de bonito, ficou rápido e muito fácil de apresentar aos meus clientes.</p>
+      </div>
 
-  <script src="app.js"></script>
+      <div class="testimonial-card">
+        <img class="google-icon" src="logo-google.png"" alt="Google">
+        <div class="testimonial-header">
+          <img src="cliente-fernanda.webp" alt="Cliente">
+          <div>
+            <strong>Fernanda Rocha</strong>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>Entrega rápida, comunicação clara e um nível de qualidade acima da média.</p>
+      </div>
+
+      <div class="testimonial-card">
+        <img class="google-icon" src="logo-google.png"" alt="Google">
+        <div class="testimonial-header">
+          <img src="cliente2.jpg" alt="Cliente">
+          <div>
+            <strong>Lucas Azevedo</strong>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>Hoje consigo focar só no comercial enquanto o desenvolvimento roda com total confiança.</p>
+      </div>
+
+      <div class="testimonial-card">
+        <img class="google-icon" src="logo-google.png"" alt="Google">
+        <div class="testimonial-header">
+          <img src="logo-growth.webp" alt="Cliente">
+          <div>
+            <strong>Bruno Farias</strong>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>Os sites ficaram rápidos, bem estruturados e com excelente apresentação.</p>
+      </div>
+
+      <div class="testimonial-card">
+        <img class="google-icon" src="logo-google.png"" alt="Google">
+        <div class="testimonial-header">
+          <img src="logo.avif" alt="Cliente">
+          <div>
+            <strong>Ana Paula Silva</strong>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>Parceria que realmente agrega valor ao serviço que entrego aos meus clientes.</p>
+      </div>
+
+      <div class="testimonial-card">
+        <img class="google-icon" src="logo-google.png"" alt="Google">
+        <div class="testimonial-header">
+          <img src="real.png" alt="Cliente">
+          <div>
+            <strong>Diego Martins</strong>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>Profissionalismo do início ao fim. Recomendo para quem quer escalar com segurança.</p>
+      </div>
+
+      <div class="testimonial-card">
+        <img class="google-icon" src="logo-google.png"" alt="Google">
+        <div class="testimonial-header">
+          <img src="market.webp" alt="Cliente">
+          <div>
+            <strong>Camila Nogueira</strong>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <p>Entrega consistente e suporte excelente. Já viramos parceiros fixos.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:48px">
+      <a href="https://wa.me/5547992916915" class="btn">Solicitar Orçamento</a>
+    </div>
+  </section>
+
+    <!-- Seção Autoridade / Impressão -->
+  <section class="authority">
+    <div class="authority-grid">
+      <div class="authority-content">
+        <h2>Transmita Seriedade, Confiança e Solidez aos seus clientes</h2>
+        <p>Para se destacar na internet é preciso ter um site confiável e bem desenvolvido.</p>
+        <p>Meu papel é pegar sua empresa e colocar de forma profissional na internet.</p>
+        <p><strong>O objetivo é encantar os seus clientes causando uma ótima 1ª impressão.</strong></p>
+      </div>
+
+      <div class="authority-image">
+        <img src="computer-4795762_1920.jpg" alt="Site profissional e confiável">
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <h2 style="text-align:center; margin-bottom:24px">Vamos conversar?</h2>
+    <p style="text-align:center; max-width:600px; margin:auto; color:var(--gray)">
+      Entre em contato e receba uma proposta personalizada para o seu projeto.
+    </p>
+    <div style="text-align:center; margin-top:32px">
+      <a href="https://wa.me/5547992916915" class="btn">Falar no WhatsApp</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Carlos Rocha</h3>
+        <p>Criação de sites profissionais, modernos e focados em performance para empresas e agências.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="#">Criação de sites</a></li>
+          <li><a href="#">Landing pages</a></li>
+          <li><a href="#">SEO estratégico</a></li>
+          <li><a href="#">Manutenção</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre</a></li>
+          <li><a href="#">Portfólio</a></li>
+          <li><a href="#">Depoimentos</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contato</h4>
+        <p>Email: calospladv@gmail.com</p>
+        <p>WhatsApp: (47) 99291-6915</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 • Carlos Rocha | Criação de sites profissionais • Todos os direitos reservados
+    </div>
+  </footer>
+
   <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js")
-        .then(() => console.log("Service Worker registrado"))
-        .catch(err => console.error("Erro ao registrar SW:", err));
-    }
+    const cards = document.querySelectorAll('.card');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    cards.forEach(card => observer.observe(card));
   </script>
 </body>
 </html>
